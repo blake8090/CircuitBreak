@@ -1,0 +1,21 @@
+## Java
+*.class
+hs_err_pid*
+
+/build/
+/out/
+
+## Gradle
+/local.properties
+.gradle/
+
+## Intellij
+.idea/
+*.iml
+
+## OS Specific
+.DS_Store
+Thumbs.db
+
+## Misc
+log.txt

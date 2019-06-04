@@ -1,0 +1,56 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.3.21'
+    id 'application'
+}
+
+ext {
+    kotlin_version = '1.3.21'
+
+    // LibGDX version
+    gdxVersion = '1.9.9'
+
+//    assetsDir = 'assets/'
+}
+
+mainClassName = 'com.blake8090.circuitbreak.MainKt'
+
+defaultTasks 'clean', 'run'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main.kotlin.srcDirs += 'src/main/kotlin'
+    test.kotlin.srcDirs += 'src/test/kotlin'
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+    compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+    compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+
+    compile group: 'org.tinylog', name: 'tinylog', version: '1.3.6'
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: '1.3.21'
+
+    testCompile 'junit:junit:4.12'
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testCompile "org.assertj:assertj-core:3.11.0"
+    testCompile "org.mockito:mockito-core:2.25.1"
+}
+
+jar {
+    manifest { attributes 'Main-Class': 'com.blake8090.circuitbreak.MainKt' }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    archivesBaseName = 'CircuitBreak'
+}
+
+//task copyToLib(type: Copy) {
+//    into "$buildDir/libs/${assetsDir}"
+//    from "${assetsDir}"
+//}
+//
+//jar.dependsOn(copyToLib)
