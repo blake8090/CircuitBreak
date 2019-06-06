@@ -2,6 +2,7 @@ package com.blake8090.circuitbreak
 
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.blake8090.circuitbreak.screen.GameScreen
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
 import org.pmw.tinylog.Logger
@@ -17,6 +18,7 @@ class CircuitBreak : Game() {
     override fun create() {
         setupLogger()
         context = GameContext()
+        setScreen(GameScreen(context))
     }
 
     private fun setupLogger() {
