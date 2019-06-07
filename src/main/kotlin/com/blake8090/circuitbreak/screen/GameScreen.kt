@@ -6,5 +6,6 @@ import org.pmw.tinylog.Logger
 class GameScreen(context: GameContext) : BaseScreen(context) {
     override fun show() {
         Logger.info("Game screen init")
+        context.assets.loadGfx()
     }
 }
