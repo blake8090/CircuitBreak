@@ -4,5 +4,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
 
 fun main() {
-    LwjglApplication(CircuitBreak(), LwjglApplicationConfiguration())
+    val configuration = LwjglApplicationConfiguration()
+    // avoids non zero exit values indicating an error occurred
+    configuration.forceExit = false
+    LwjglApplication(CircuitBreak(), configuration)
 }
