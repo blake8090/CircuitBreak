@@ -65,6 +65,8 @@ class Assets {
         assetManager.load(descriptor)
         textureAliases[fileName] = descriptor
     }
+
+    fun finishLoading() = assetManager.finishLoading()
 }
 
 /**
