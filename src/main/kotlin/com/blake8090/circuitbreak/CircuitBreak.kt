@@ -41,6 +41,10 @@ class CircuitBreak : ApplicationAdapter() {
         screen?.update()
     }
 
+    override fun resize(width: Int, height: Int) {
+        screen?.resize(width, height)
+    }
+
     private fun setScreen(screen: Screen) {
         this.screen = screen
         screen.init()
