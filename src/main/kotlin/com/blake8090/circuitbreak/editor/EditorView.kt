@@ -1,13 +1,14 @@
 package com.blake8090.circuitbreak.editor
 
 import com.badlogic.gdx.utils.Align
+import com.blake8090.circuitbreak.asset.Assets
 import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.MenuBar
 import com.kotcrab.vis.ui.widget.Separator
 import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisTable
 
-class EditorView(controller: EditorController) {
+class EditorView(private val controller: EditorController) {
     val root = VisTable()
     val menuBar = EditorMenuBar()
 
@@ -28,5 +29,11 @@ class EditorView(controller: EditorController) {
 
         menuBar.createMenu(controller)
         root.add(menuBar.getTable()).expandX().fillX().row()
+    }
+
+    fun openEntityWindow(assets: Assets) {
+        val window = EntityTemplateWindow(assets)
+        window.onCloseListener = { controller.onEntityWindowClosed() }
+        controller.stage.addActor(window)
     }
 }

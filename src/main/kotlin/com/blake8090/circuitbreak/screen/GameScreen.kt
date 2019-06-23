@@ -17,12 +17,14 @@ class GameScreen(context: GameContext) : Screen(context) {
     private val viewport = FillViewport(ART_WIDTH, ART_HEIGHT, camera)
 
     private val model = GameModel()
-    private val editorController = EditorController(model)
+    private val editorController = EditorController(model, context.assets)
 
     override fun init() {
         Logger.info("Game screen init")
         context.assets.loadGfx()
         context.assets.finishLoading()
+
+        editorController.init()
 
         viewport.apply()
         camera.position.set((ART_WIDTH / 2), (ART_HEIGHT / 2), 0f)

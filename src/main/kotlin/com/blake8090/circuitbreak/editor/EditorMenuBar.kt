@@ -30,7 +30,7 @@ class EditorMenuBar {
 
         val menuView = Menu("View")
         addMenuItem(menuView, "Entity Templates") {
-            controller.onShowEntityTemplates()
+            controller.onOpenEntityWindow()
         }
         addMenuItem(menuView, "Tiles")
         menuBar.addMenu(menuView)
