@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.blake8090.circuitbreak.asset.Assets
 import com.blake8090.circuitbreak.screen.GameScreen
 import com.blake8090.circuitbreak.screen.Screen
+import com.kotcrab.vis.ui.VisUI
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
 import org.pmw.tinylog.Logger
@@ -24,6 +25,7 @@ class CircuitBreak : ApplicationAdapter() {
     override fun create() {
         setupLogger()
         context = GameContext()
+        VisUI.load(VisUI.SkinScale.X1)
         setScreen(GameScreen(context))
     }
 
@@ -31,18 +33,22 @@ class CircuitBreak : ApplicationAdapter() {
         screen?.input()
         screen?.update()
 
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
+        Gdx.gl.glClearColor(0f, 0f, 0.5f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         context.batch.begin()
         screen?.render()
         context.batch.end()
-
-        screen?.update()
+        screen?.postBatchRender()
     }
 
     override fun resize(width: Int, height: Int) {
         screen?.resize(width, height)
+    }
+
+    override fun dispose() {
+        screen?.dispose()
+        VisUI.dispose()
     }
 
     private fun setScreen(screen: Screen) {

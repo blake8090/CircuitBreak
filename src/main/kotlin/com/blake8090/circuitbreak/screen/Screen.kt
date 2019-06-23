@@ -7,6 +7,7 @@ abstract class Screen(val context: GameContext) {
     open fun input() {}
     open fun update() {}
     open fun render() {}
+    open fun postBatchRender() {}
     open fun resize(width: Int, height: Int) {}
     open fun dispose() {}
 }

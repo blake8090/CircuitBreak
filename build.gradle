@@ -8,7 +8,7 @@ ext {
 
     // LibGDX version
     gdxVersion = '1.9.9'
-
+    visuiVersion = '1.4.2'
 //    assetsDir = 'assets/'
 }
 
@@ -40,6 +40,8 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.9'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.9'
     compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.9.9'
+
+    compile "com.kotcrab.vis:vis-ui:$visuiVersion"
 
     testCompile 'junit:junit:4.12'
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
