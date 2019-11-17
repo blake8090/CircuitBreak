@@ -41,6 +41,8 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.+'
     compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.+'
 
+    compile "io.github.classgraph:classgraph:4.+"
+
     testCompile 'junit:junit:4.+'
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testCompile "org.assertj:assertj-core:3.+"
