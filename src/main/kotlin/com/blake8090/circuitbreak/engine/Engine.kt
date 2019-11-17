@@ -1,14 +1,16 @@
 package com.blake8090.circuitbreak.engine
 
 import com.blake8090.circuitbreak.engine.ioc.container
+import com.blake8090.circuitbreak.engine.screen.GameScreen
+import com.blake8090.circuitbreak.engine.screen.ScreenStack
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
 import org.pmw.tinylog.Logger
 import org.pmw.tinylog.writers.ConsoleWriter
 import org.pmw.tinylog.writers.FileWriter
 
-private const val LOG_PATH = "./log.txt"
 private const val ROOT_PACKAGE = "com.blake8090.circuitbreak"
+private const val LOG_PATH = "./log.txt"
 private const val LOG_FORMAT =
     "{date:yyyy-MM-dd HH:mm:ss} [{thread}] {class_name}.{method}() Line:{line} {level}: {message}"
 
@@ -19,13 +21,16 @@ class Engine {
 
     fun start() {
         setupLogger()
+        container.get(ScreenStack::class).changeScreen(GameScreen::class)
     }
 
     fun update() {
-
+        container.get(ScreenStack::class).forEachScreen { it.update() }
+        container.get(ScreenStack::class).update()
     }
 
     fun stop() {
+        container.get(ScreenStack::class).dispose()
         Logger.info("Stopping engine")
     }
 
