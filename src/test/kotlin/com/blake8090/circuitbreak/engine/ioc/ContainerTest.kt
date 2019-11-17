@@ -5,9 +5,6 @@ import org.junit.Test
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import java.util.concurrent.ThreadLocalRandom
-import org.junit.rules.ExpectedException
-import org.junit.Rule
-
 
 
 class ContainerTest {
@@ -84,6 +81,31 @@ class ContainerTest {
         container {
             scan("com.blake8090.circuitbreak.engine.ioc")
             get(MyService::class)
+        }
+    }
+
+    @Test
+    fun `Automatically bind container using custom supplier`() {
+        container {
+            assertThat(get(Container::class)).isEqualTo(this)
+        }
+    }
+
+    @Test
+    fun `Use custom supplier when set`() {
+        class Record {
+            var id = 0
+        }
+
+        container {
+            bind(Record::class, Record::class)
+            setCustomSupplier(Record::class) {
+                val record = Record()
+                record.id = 50
+                record
+            }
+            val instance = get(Record::class)
+            assertThat(instance.id).isEqualTo(50)
         }
     }
 

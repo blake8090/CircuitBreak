@@ -11,6 +11,16 @@ import kotlin.reflect.full.cast
 class Container {
     private val singletonInstanceMap = mutableMapOf<KClass<*>, Any>()
     private val bindings = mutableMapOf<KClass<*>, Binding>()
+    private val customSupplier = mutableMapOf<KClass<*>, () -> Any>()
+
+    init {
+        bind(Container::class, Container::class, Lifetime.SINGLETON)
+        setCustomSupplier(Container::class) { this }
+    }
+
+    fun <T : Any> setCustomSupplier(clazz: KClass<T>, constructor: () -> T) {
+        customSupplier[clazz] = constructor
+    }
 
     fun <T : Any> bind(
         interfaceClass: KClass<T>,
@@ -49,6 +59,10 @@ class Container {
     }
 
     private fun <T : Any> constructInstance(clazz: KClass<T>): T {
+        if (customSupplier.containsKey(clazz)) {
+            return clazz.cast(customSupplier[clazz]?.invoke())
+        }
+
         val constructor = getConstructor(clazz)
         val dependencies = constructor.parameters
             .map { it.type.classifier as KClass<*> }
