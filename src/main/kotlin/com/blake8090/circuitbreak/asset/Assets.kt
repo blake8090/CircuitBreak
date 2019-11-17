@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader
 import com.blake8090.circuitbreak.util.FileUtil
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import org.pmw.tinylog.Logger
 
 //TODO: add font
@@ -26,12 +28,31 @@ class Assets {
     private val fileUtil = FileUtil()
     private val assetManager = AssetManager()
     private val textureAliases = mutableMapOf<String, AssetDescriptor<Texture>>()
+    private val entityTemplates = mutableMapOf<String, String>()
 
     init {
         val resolver = InternalFileHandleResolver()
         assetManager.setLoader(FreeTypeFontGenerator::class.java, FreeTypeFontGeneratorLoader(resolver))
         assetManager.setLoader(BitmapFont::class.java, ".ttf", FreetypeFontLoader(resolver))
     }
+
+    // todo: async loader for this?
+    fun loadTemplates() {
+        val files = fileUtil.getFilesInPath(Paths.TEMPLATES_PATH)
+            .filter { it.extension() == "yaml" }
+        files.forEach { handle ->
+            Logger.debug("Reading entity template file '${handle.path()}'")
+            // file contents will be stored and generated on demand
+            // in order to create fresh instances of Components
+//            entityTemplates[handle.name()] = fileUtil.readFile(handle)
+            val content = fileUtil.readFile(handle)
+//            val template
+        }
+    }
+
+    fun getTemplates() = entityTemplates.entries
+
+    fun getTemplate(templateName: String): String? = entityTemplates[templateName]
 
     fun loadGfx() {
         val imageFiles = fileUtil.getFilesInPath(Paths.GFX_PATH)
@@ -75,5 +96,6 @@ class Assets {
 object Paths {
     private const val DATA_PATH = "data"
     const val GFX_PATH = "$DATA_PATH/gfx/"
+    const val TEMPLATES_PATH = "$DATA_PATH/entities/"
 //    const val FONTS_PATH = "$DATA_PATH/fonts/"
 }

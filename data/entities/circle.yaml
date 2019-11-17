@@ -1,0 +1,3 @@
+- !<PositionComponent> {}
+- !<TextureComponent>
+  texture: circle.png

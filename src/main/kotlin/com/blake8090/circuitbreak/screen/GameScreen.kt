@@ -22,6 +22,7 @@ class GameScreen(context: GameContext) : Screen(context) {
     override fun init() {
         Logger.info("Game screen init")
         context.assets.loadGfx()
+        context.assets.loadTemplates()
         context.assets.finishLoading()
 
         editorController.init()

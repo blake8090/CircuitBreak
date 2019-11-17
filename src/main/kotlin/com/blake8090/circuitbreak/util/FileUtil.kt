@@ -2,6 +2,7 @@ package com.blake8090.circuitbreak.util
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.files.FileHandle
+import java.nio.charset.Charset
 
 /**
  * Simple wrapper around Gdx methods for handling files and folders.
@@ -27,4 +28,10 @@ class FileUtil {
             results.add(handle)
         }
     }
+
+    fun readFile(fileHandle: FileHandle) =
+            fileHandle.file()
+                .inputStream()
+                .readBytes()
+                .toString(Charsets.UTF_8)
 }
