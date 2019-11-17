@@ -80,9 +80,12 @@ class Container {
     }
 
     private fun createBinding(classInfo: ClassInfo) {
+        // todo: handle interfaces as Components
+        if (classInfo.isInterface) {
+            return
+        }
         val annotationInfo = classInfo.getAnnotationInfo(Component::class.java.name)
             .loadClassAndInstantiate() as Component
-        // todo: handle interfaces as Components
         val kClass = Reflection.createKotlinClass(classInfo.loadClass())
         bind(kClass, kClass, annotationInfo.lifetime)
     }
