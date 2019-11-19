@@ -40,6 +40,9 @@ class Container {
         return clazz.cast(resolveInstance(binding))
     }
 
+    fun <T : Any> get(clazz: KClass<T>, consumer: T.() -> Unit) =
+        get(clazz).apply(consumer)
+
     private fun resolveInstance(binding: Binding): Any {
         val instanceClass = binding.implementationClass
         var instance: Any? = null

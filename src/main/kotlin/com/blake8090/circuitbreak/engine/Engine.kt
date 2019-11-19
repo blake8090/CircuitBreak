@@ -1,7 +1,9 @@
 package com.blake8090.circuitbreak.engine
 
+import com.blake8090.circuitbreak.engine.asset.Assets
 import com.blake8090.circuitbreak.engine.ioc.container
 import com.blake8090.circuitbreak.engine.screen.GameScreen
+import com.blake8090.circuitbreak.engine.screen.Screen
 import com.blake8090.circuitbreak.engine.screen.ScreenStack
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
@@ -22,11 +24,14 @@ class Engine {
     fun start() {
         setupLogger()
         container.get(ScreenStack::class).changeScreen(GameScreen::class)
+        container.get(Assets::class).loadGfx()
     }
 
     fun update() {
-        container.get(ScreenStack::class).forEachScreen { it.update() }
-        container.get(ScreenStack::class).update()
+        container.get(ScreenStack::class) {
+            forEachScreen(Screen::update)
+            update()
+        }
     }
 
     fun stop() {
