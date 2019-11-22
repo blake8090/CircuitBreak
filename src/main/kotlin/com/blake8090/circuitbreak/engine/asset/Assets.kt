@@ -61,6 +61,8 @@ class Assets(
     }
 
     fun hasTexture(fileName: String) = textureAliases.containsKey(fileName)
+
+    fun finishLoading() = assetManager.finishLoading()
 }
 
 @Component
